@@ -198,6 +198,7 @@ vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left wind
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+vim.keymap.set("n", "<leader>e", ":Neotree filesystem reveal left<CR>", { desc = "R[e]veal file tree" })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -239,6 +240,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	-- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
+	"github/copilot.vim",
 	{
 		"nvim-lualine/lualine.nvim",
 		lazy = false,
@@ -268,6 +270,16 @@ require("lazy").setup({
 		},
 	},
 	"theprimeagen/harpoon",
+	{
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v3.x",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+			"MunifTanjim/nui.nvim",
+			-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+		},
+	},
 	-- NOTE: Plugins can also be added by using a table,
 	-- with the first argument being the link and the following
 	-- keys can be used to configure plugin behavior/loading/etc.
@@ -437,47 +449,6 @@ require("lazy").setup({
 					background = "#1C202D",
 				},
 				highlight_overrides = {},
-			})
-
-			require("lualine").setup({
-				options = {
-					icons_enabled = false,
-					theme = "palenight",
-					component_separators = { left = "", right = "" },
-					section_separators = { left = "", right = "" },
-					disabled_filetypes = {
-						statusline = {},
-						winbar = {},
-					},
-					always_divide_middle = true,
-					always_show_tabline = true,
-					globalstatus = false,
-					refresh = {
-						statusline = 100,
-						tabline = 100,
-						winbar = 100,
-					},
-				},
-				sections = {
-					lualine_a = { "mode" },
-					lualine_b = { "branch", "diff", "diagnostics" },
-					lualine_c = { "filename" },
-					lualine_x = { "encoding", "fileformat", "filetype" },
-					lualine_y = { "progress" },
-					lualine_z = { "location" },
-				},
-				inactive_sections = {
-					lualine_a = {},
-					lualine_b = {},
-					lualine_c = { "filename" },
-					lualine_x = { "location" },
-					lualine_y = {},
-					lualine_z = {},
-				},
-				tabline = {},
-				winbar = {},
-				inactive_winbar = {},
-				extensions = {},
 			})
 
 			-- Enable Telescope extensions if they are installed
@@ -740,6 +711,51 @@ require("lazy").setup({
 			--
 			--  You can press `g?` for help in this menu.
 			require("mason").setup()
+
+			require("lualine").setup({
+				options = {
+					icons_enabled = true,
+					theme = "palenight",
+					component_separators = { left = "", right = "" },
+					section_separators = { left = "", right = "" },
+					disabled_filetypes = {
+						statusline = {},
+						winbar = {},
+					},
+					always_divide_middle = true,
+					always_show_tabline = true,
+					globalstatus = false,
+					refresh = {
+						statusline = 100,
+						tabline = 100,
+						winbar = 100,
+					},
+				},
+				sections = {
+					lualine_a = { "mode" },
+					lualine_b = { "branch", "diff", "diagnostics" },
+					lualine_c = { "filename" },
+					lualine_x = { "encoding", "fileformat", "filetype" },
+					lualine_y = {
+						function()
+							return " " .. os.date("%-I:%02M %p")
+						end,
+					},
+					lualine_z = { "location" },
+				},
+				inactive_sections = {
+					lualine_a = {},
+					lualine_b = {},
+					lualine_c = { "filename" },
+					lualine_x = { "location" },
+					lualine_y = {},
+					lualine_z = {},
+				},
+				tabline = {},
+				winbar = {},
+				inactive_winbar = {},
+				extensions = {},
+			})
 
 			-- You can add other tools here that you want Mason to install
 			-- for you, so that they are available from within Neovim.
