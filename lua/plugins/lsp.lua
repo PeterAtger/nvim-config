@@ -67,10 +67,10 @@ return {
 					},
 				},
 				eslint = {
-					autostart = false,
+					autostart = true,
 					cmd = { "vscode-eslint-language-server", "--stdio", "--max-old-space-size=12288" },
 					settings = {
-						format = false,
+						format = true,
 					},
 				},
 				html = {},
@@ -125,11 +125,15 @@ return {
 						features = "all",
 					},
 				},
+				intelephense = {
+					autostart = true,
+				},
 			}
 
 			local formatters = {
 				prettierd = {},
 				stylua = {},
+				intelephense = {},
 			}
 
 			local manually_installed_servers = { "ocamllsp", "gleam", "rust_analyzer" }

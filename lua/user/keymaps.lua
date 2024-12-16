@@ -50,9 +50,6 @@ end)
 -- Swap between last two buffers
 nnoremap("<leader>'", "<C-^>", { desc = "Switch to last buffer" })
 
--- Save with leader key
-nnoremap("<leader>w", "<cmd>w<cr>", { silent = false, desc = "Write to buffer" })
-
 -- Quit with leader key
 nnoremap("<leader>q", "<cmd>q<cr>", { silent = false, desc = "[Q]uit" })
 
@@ -282,11 +279,11 @@ nnoremap("<leader>/", function()
 	}))
 end, { desc = "[/] Fuzzily search in current buffer]" })
 
-nnoremap("<leader>ss", function()
-	require("telescope.builtin").spell_suggest(require("telescope.themes").get_dropdown({
-		previewer = false,
-	}))
-end, { desc = "[S]earch [S]pelling suggestions" })
+-- nnoremap("<leader>ss", function()
+-- 	require("telescope.builtin").spell_suggest(require("telescope.themes").get_dropdown({
+-- 		previewer = false,
+-- 	}))
+-- end, { desc = "[S]earch [S]pelling suggestions" })
 
 -- LSP Keybinds (exports a function to be used in ../../after/plugin/lsp.lua b/c we need a reference to the current buffer) --
 M.map_lsp_keybinds = function(buffer_number)
@@ -407,9 +404,7 @@ vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true
 vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 vim.keymap.set("n", "<C-`>", ":FloatermNew<CR>", { desc = "New floaterm window" })
-vim.keymap.set("n", "<C-j>", "<cmd>:FloatermToggle<cr>", { desc = "New floaterm window" })
 vim.keymap.set("n", "<leader>tt", "<cmd>:FloatermToggle<cr>", { desc = "[T]erminal [T]oggle" })
-vim.keymap.set("t", "<C-j>", "<cmd>:FloatermToggle<cr>", { desc = "[T]erminal [T]oggle" })
 vim.keymap.set("i", "<C-c>", "<esc>", { desc = "Close insert mode" })
 vim.keymap.set("n", "<leader>lg", "<cmd>LazyGit<cr>", { desc = "LazyGit" })
 vim.keymap.set("n", "<leader>vs", "<cmd>vs<cr>", { desc = "[V]ertical [S]plit" })
@@ -418,5 +413,17 @@ vim.keymap.set("n", "K", ":m .-2<CR>==", { desc = "Move current line up" })
 vim.keymap.set("n", "J", ":m .+1<CR>==", { desc = "Move current line down" })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selected lines up" })
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selected lines down" })
+vim.keymap.set("n", "<leader>te", "<cmd>:terminal<cr>", { desc = "[T]erminal [E]mbed" })
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "floaterm",
+	callback = function()
+		vim.keymap.set("t", "<C-j>", "<cmd>:FloatermToggle<CR>", { buffer = true, desc = "[T]erminal [T]oggle" })
+		vim.keymap.set("t", "<C-l>", "<cmd>:FloatermNext<CR>", { buffer = true, desc = "[T]erminal Next" })
+		vim.keymap.set("t", "<C-h>", "<cmd>:FloatermPrev<CR>", { buffer = true, desc = "[T]erminal Prev" })
+		vim.keymap.set("t", "<C-k>", "<cmd>:FloatermKill<CR>", { buffer = true, desc = "[T]erminal Kill" })
+		vim.keymap.set("t", "<C-n>", "<cmd>:FloatermNew<CR>", { buffer = true, desc = "[T]erminal New" })
+	end,
+})
 
 return M

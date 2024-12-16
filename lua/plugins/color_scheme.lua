@@ -36,7 +36,7 @@ return {
 	},
 	-- {
 	-- 	"JoosepAlviste/palenightfall.nvim",
-	-- 	setup = function()
+	-- 	config = function()
 	-- 		require("palenightfall").setup({
 	-- 			transparent = false,
 	-- 			color_overrides = {
