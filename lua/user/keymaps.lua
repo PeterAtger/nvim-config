@@ -177,13 +177,13 @@ nnoremap("<leader>m", ":MaximizerToggle<cr>", { desc = "Toggle [M]aximizer" })
 nnoremap("<leader>=", "<C-w>=", { desc = "Resize split windows to be equal size" })
 
 -- Press leader f to format
-nnoremap("<leader>f", function()
-	conform.format({
-		async = true,
-		timeout_ms = 500,
-		lsp_format = "fallback",
-	})
-end, { desc = "[F]ormat the buffer" })
+-- nnoremap("<leader>f", function()
+-- 	conform.format({
+-- 		async = true,
+-- 		timeout_ms = 500,
+-- 		lsp_format = "fallback",
+-- 	})
+-- end, { desc = "[F]ormat the buffer" })
 
 -- Press leader rw to rotate open windows
 nnoremap("<leader>rw", ":RotateWindows<cr>", { desc = "[R]otate [W]indows" })
@@ -319,7 +319,7 @@ M.map_lsp_keybinds = function(buffer_number)
 
 	-- See `:help K` for why this keymap
 	-- nnoremap("K", vim.lsp.buf.hover, { desc = "LSP: Hover Documentation", buffer = buffer_number })
-	nnoremap("<leader>k", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
+	nnoremap("<leader>i", vim.lsp.buf.hover, { desc = "LSP: Hover Documentation", buffer = buffer_number })
 	inoremap("<C-k>", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
 
 	-- Lesser used LSP functionality
@@ -340,9 +340,9 @@ end, { desc = "[O]pen [C]opilot panel" })
 -- nnoremap("zM", require("ufo").closeAllFolds)
 
 -- toggle inlay hints
-nnoremap("<leader>ih", function()
-	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
-end)
+-- nnoremap("<leader>ih", function()
+-- 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
+-- end)
 
 -- Insert --
 -- Map jj and JJ to <esc>

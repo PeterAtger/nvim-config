@@ -59,7 +59,6 @@ return {
 			local servers = {
 				-- LSP Servers
 				bashls = {},
-				biome = {},
 				cssls = {},
 				gleam = {
 					settings = {
@@ -72,6 +71,12 @@ return {
 					settings = {
 						format = true,
 					},
+					on_attach = function(_, bufnr)
+						vim.api.nvim_create_autocmd("BufWritePre", {
+							buffer = bufnr,
+							command = "EslintFixAll",
+						})
+					end,
 				},
 				html = {},
 				jsonls = {},
@@ -160,7 +165,12 @@ return {
 					capabilities = capabilities,
 					filetypes = config.filetypes,
 					handlers = vim.tbl_deep_extend("force", {}, default_handlers, config.handlers or {}),
-					on_attach = on_attach,
+					on_attach = function(client, bufnr)
+						on_attach(client, bufnr)
+						if config.on_attach then
+							config.on_attach(client, bufnr)
+						end
+					end,
 					settings = config.settings,
 					root_dir = config.root_dir,
 				})
@@ -200,12 +210,9 @@ return {
 			format_after_save = {
 				async = true,
 				timeout_ms = 500,
-				lsp_format = "fallback",
+				lsp_format = "never",
 			},
 			formatters_by_ft = {
-				javascript = { "biome" },
-				typescript = { "biome" },
-				typescriptreact = { "biome" },
 				svelte = { "prettierd", "prettier " },
 				lua = { "stylua" },
 			},

@@ -34,6 +34,17 @@ return {
 				view_options = {
 					show_hidden = true,
 				},
+				preview = {
+					padding = 0,
+					win_options = {
+						winhl = "Normal:Normal,Float:Float",
+					},
+				},
+				float = {
+					win_options = {
+						winhl = "Normal:Normal,Float:Float",
+					},
+				},
 			})
 		end,
 	},

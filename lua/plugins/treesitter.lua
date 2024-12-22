@@ -46,6 +46,9 @@ return {
 				autotag = {
 					enable = true,
 				},
+				rainbow = {
+					enable = true,
+				},
 				incremental_selection = {
 					enable = true,
 					keymaps = {
