@@ -26,8 +26,6 @@ return {
 					file_ignore_patterns = {
 						"node_modules",
 						"yarn.lock",
-						".git",
-						".sl",
 						"_build",
 						".next",
 					},

@@ -67,8 +67,9 @@ return {
 				},
 				eslint = {
 					autostart = true,
-					cmd = { "vscode-eslint-language-server", "--stdio", "--max-old-space-size=12288" },
+					cmd = { "vscode-eslint-language-server", "--stdio", "--max-old-space-size=49152" },
 					settings = {
+						workingDirectories = { mode = "auto" },
 						format = true,
 					},
 					on_attach = function(_, bufnr)
@@ -76,6 +77,14 @@ return {
 							buffer = bufnr,
 							command = "EslintFixAll",
 						})
+					end,
+					on_exit = function(code, signal, client_id)
+						if signal > 0 then
+							vim.notify("LSP exited abnormally. Eslint Restarting ...")
+							vim.defer_fn(function()
+								vim.cmd("e") -- Refresh the current buffer
+							end, 50) -- Schedule `:e` after 100 ms
+						end
 					end,
 				},
 				html = {},
@@ -171,6 +180,7 @@ return {
 							config.on_attach(client, bufnr)
 						end
 					end,
+					on_exit = config.on_exit,
 					settings = config.settings,
 					root_dir = config.root_dir,
 				})
@@ -218,4 +228,5 @@ return {
 			},
 		},
 	},
+	{},
 }

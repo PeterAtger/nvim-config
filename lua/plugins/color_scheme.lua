@@ -50,12 +50,14 @@ return {
 
 			-- Function to toggle transparency and colors
 			local function toggle_colors()
+				vim.highlight.priorities.semantic_tokens = 75
+
 				is_transparent = not is_transparent
 
 				local color_set = is_transparent and colors.transparent or colors.normal
 
 				require("palenightfall").setup({
-					transparent = is_transparent,
+					transparent = false,
 					color_overrides = {
 						background = color_set.background,
 					},
@@ -66,12 +68,16 @@ return {
 						TelescopePromptNormal = { bg = c.references },
 						TelescopePromptBorder = { fg = c.foreground, bg = color_set.background },
 
+						CursorLine = { bg = c.background_darker },
+						CursorLineNr = { fg = c.orange },
 						WhichKeyNormal = { fg = c.foreground, bg = color_set.background },
 						FloatNormal = { fg = c.foreground, bg = color_set.background },
 						FloatBorder = { fg = c.foreground, bg = color_set.background },
-						NotifyBackground = { fg = c.foreground, bg = color_set.background },
+						FloatermBorder = { fg = c.foreground, bg = color_set.background },
+						NotifyBackgroud = { fg = c.foreground, bg = color_set.background },
 
 						Tag = { fg = c.red },
+						Const = { fg = c.red },
 						Type = { fg = c.yellow },
 						Operator = { fg = c.purple },
 						Delimiter = { fg = c.blue },
@@ -79,6 +85,9 @@ return {
 						Constant = { fg = c.red },
 					},
 				})
+
+				-- Added integration with lualine
+				require("lualine").setup({})
 			end
 
 			-- Bind the function globally for keybinding
@@ -92,32 +101,8 @@ return {
 				"n",
 				"<leader>ft",
 				"<cmd>lua vim.g.toggle_colors()<CR>",
-				{ noremap = true, silent = true }
+				{ noremap = true, silent = true, desc = "[F]ocus [T]oggle" }
 			)
-
-			-- require("palenightfall").setup({
-			-- 	transparent = true,
-			-- 	color_overrides = {
-			-- 		background = "#1C202D",
-			-- 	},
-			-- 	highlight_overrides = {
-			-- 		TelescopeBorder = { fg = c.foreground, bg = c.background },
-			-- 		TelescopeNormal = { fg = c.foreground, bg = c.background },
-			-- 		TelescopePromptNormal = { bg = c.references },
-			-- 		TelescopePromptBorder = { fg = c.foreground, bg = c.background },
-			--
-			-- 		WhichKeyNormal = { fg = c.foreground, bg = c.background },
-			-- 		FloatNormal = { fg = c.foreground, bg = c.background },
-			-- 		FloatBorder = { fg = c.foreground, bg = c.background },
-			--
-			-- 		Tag = { fg = c.red },
-			-- 		Type = { fg = c.yellow },
-			-- 		Operator = { fg = c.purple },
-			-- 		Delimiter = { fg = c.blue },
-			-- 		Special = { fg = c.blue },
-			-- 		Constant = { fg = c.red },
-			-- 	},
-			-- })
 		end,
 	},
 }

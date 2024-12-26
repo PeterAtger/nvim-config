@@ -405,7 +405,7 @@ vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 vim.keymap.set("n", "<C-`>", ":FloatermNew<CR>", { desc = "New floaterm window" })
 vim.keymap.set("n", "<leader>tt", "<cmd>:FloatermToggle<cr>", { desc = "[T]erminal [T]oggle" })
-vim.keymap.set("i", "<C-c>", "<esc>", { desc = "Close insert mode" })
+vim.keymap.set("i", "<C-c>", "<esc><esc>", { desc = "Close insert mode" })
 vim.keymap.set("n", "<leader>lg", "<cmd>LazyGit<cr>", { desc = "LazyGit" })
 vim.keymap.set("n", "<leader>vs", "<cmd>vs<cr>", { desc = "[V]ertical [S]plit" })
 vim.keymap.set("n", "<leader>vn", "<cmd>vnew<cr>", { desc = "[V]ertical [N]ew" })
