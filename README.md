@@ -1,6 +1,3 @@
-Here’s the complete `README.md` as a single markdown file:
-
-```markdown
 # My Neovim Configuration
 
 This is my personal Neovim configuration, designed to enhance productivity and make development enjoyable. This configuration includes features like fast plugin management with `lazy.nvim`, code navigation using `telescope.nvim`, efficient file management with `oil.nvim`, and more.
@@ -15,7 +12,7 @@ Ensure Neovim is installed. Follow the instructions [here](https://neovim.io/) f
 - **macOS**: Install via Homebrew:
   ```bash
   brew install neovim
-  ```
+  
 - **Linux**: Use your package manager (e.g., `sudo apt install neovim` for Ubuntu).
 - **Windows**: Download the release from [Neovim's GitHub](https://github.com/neovim/neovim/releases).
 
