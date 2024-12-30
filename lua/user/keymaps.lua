@@ -345,6 +345,7 @@ end, { desc = "[O]pen [C]opilot panel" })
 -- end)
 
 -- Insert --
+inoremap("<C-v>", "<C-r>*", { desc = "Insert [C]lipboard" })
 -- Map jj and JJ to <esc>
 --inoremap("jj", "<esc>")
 --inoremap("JJ", "<esc>")

@@ -35,8 +35,19 @@ return {
 				green_dark = "#7d9367",
 			}
 
+			local function outside_work_hours()
+				-- Get the current hour from the system time
+				local hour = os.date("*t").hour
+				-- Check if the hour is greater than or equal to 18 (6 PM)
+				return hour >= 18 or hour < 9
+			end
+
 			-- State tracking
-			local is_transparent = false
+			local is_transparent = true
+
+			if outside_work_hours() then
+				is_transparent = false
+			end
 
 			-- Define color sets
 			local colors = {

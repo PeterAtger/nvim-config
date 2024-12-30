@@ -29,7 +29,7 @@ return {
 			wilder.set_option("pipeline", {
 				wilder.branch(
 					wilder.cmdline_pipeline({
-						fuzzy = 1,
+						fuzzy = 0,
 					}),
 					wilder.vim_search_pipeline({
 						fuzzy = 1,
