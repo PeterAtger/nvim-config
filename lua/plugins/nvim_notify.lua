@@ -38,9 +38,9 @@ return {
         highlight NotifyWARNTitle guifg=#f5a97f
       ]])
 
-			require("notify").setup({
-				background_colour = "#000000",
-			})
+			-- require("notify").setup({
+			-- 	background_colour = "#232534",
+			-- })
 		end,
 	},
 }

@@ -114,37 +114,37 @@ nnoremap("<leader>no", "<cmd>noh<cr>")
 nnoremap("]d", function()
 	vim.diagnostic.goto_next({})
 	vim.api.nvim_feedkeys("zz", "n", false)
-end)
+end, { desc = "Goto next diagnostic" })
 
 -- Goto previous diagnostic of any severity
 nnoremap("[d", function()
 	vim.diagnostic.goto_prev({})
 	vim.api.nvim_feedkeys("zz", "n", false)
-end)
+end, { desc = "Goto previous diagnostic" })
 
 -- Goto next error diagnostic
 nnoremap("]e", function()
 	vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
 	vim.api.nvim_feedkeys("zz", "n", false)
-end)
+end, { desc = "Goto next error diagnostic" })
 
 -- Goto previous error diagnostic
 nnoremap("[e", function()
 	vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
 	vim.api.nvim_feedkeys("zz", "n", false)
-end)
+end, { desc = "Goto previous error diagnostic" })
 
 -- Goto next warning diagnostic
 nnoremap("]w", function()
 	vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })
 	vim.api.nvim_feedkeys("zz", "n", false)
-end)
+end, { desc = "Goto next warning diagnostic" })
 
 -- Goto previous warning diagnostic
 nnoremap("[w", function()
 	vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })
 	vim.api.nvim_feedkeys("zz", "n", false)
-end)
+end, { desc = "Goto previous warning diagnostic" })
 
 -- Moonlander diagnostic movements --
 
