@@ -1,6 +1,7 @@
 return {
 	{
 		"gelguy/wilder.nvim",
+		event = "BufWinEnter",
 		keys = {
 			":",
 			"/",
@@ -23,7 +24,7 @@ return {
 				wilder.make_hl("WilderMauve", { { a = 1 }, { a = 1 }, { foreground = macchiato.mauve } })
 
 			-- Enable wilder when pressing :, / or ?
-			wilder.setup({ modes = { ":", "/", "?" } })
+			wilder.setup({ lazy = true, modes = { ":", "/", "?" } })
 
 			-- Enable fuzzy matching for commands and buffers
 			wilder.set_option("pipeline", {

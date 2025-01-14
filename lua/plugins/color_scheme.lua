@@ -55,7 +55,7 @@ return {
 					background = "none",
 				},
 				normal = {
-					background = "#1C202D",
+					background = "#1C1F2E",
 				},
 			}
 

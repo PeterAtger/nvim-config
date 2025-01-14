@@ -5,7 +5,17 @@ return {
 		cmd = { "LspInfo", "LspInstall", "LspUninstall", "Mason" },
 		dependencies = {
 			-- Plugin(s) and UI to automatically install LSPs to stdpath
-			"williamboman/mason.nvim",
+			{
+				"williamboman/mason.nvim",
+				opts = {
+					ensure_installed = {
+						"eslint-lsp",
+						"js-debug-adapter",
+						"prettier",
+						"typescript-language-server",
+					},
+				},
+			},
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 
@@ -106,6 +116,7 @@ return {
 						},
 					},
 				},
+				gopls = {},
 				marksman = {},
 				ocamllsp = {
 					manual_install = true,

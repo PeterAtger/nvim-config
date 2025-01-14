@@ -95,4 +95,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
 	end,
 })
 
+-- I just always misclick so this is just for my fat fingers
+vim.api.nvim_create_user_command("Q", "q", { nargs = 0 })
+
 vim.opt.fillchars = { eob = " " }

@@ -149,14 +149,14 @@ end, { desc = "Goto previous warning diagnostic" })
 -- Moonlander diagnostic movements --
 
 -- Open the diagnostic under the cursor in a float window
-nnoremap("<leader>d", function()
-	vim.diagnostic.open_float({
-		border = "rounded",
-	})
-end, { desc = "Open [d]iagnostic under the curstor" })
+-- nnoremap("<leader>d", function()
+-- 	vim.diagnostic.open_float({
+-- 		border = "rounded",
+-- 	})
+-- end, { desc = "Open [d]iagnostic under the curstor" })
 
 -- Place all dignostics into a qflist
-nnoremap("<leader>ld", vim.diagnostic.setqflist, { desc = "Quickfix [L]ist [D]iagnostics" })
+-- nnoremap("<leader>ld", vim.diagnostic.setqflist, { desc = "Quickfix [L]ist [D]iagnostics" })
 
 -- Navigate to next qflist item
 nnoremap("<leader>cn", ":cnext<cr>zz", { desc = "Navigate to next qflist item" })
@@ -408,6 +408,7 @@ vim.keymap.set("n", "<C-`>", ":FloatermNew<CR>", { desc = "New floaterm window" 
 vim.keymap.set("n", "<leader>tt", "<cmd>:FloatermToggle<cr>", { desc = "[T]erminal [T]oggle" })
 vim.keymap.set("i", "<C-c>", "<esc><esc>", { desc = "Close insert mode" })
 vim.keymap.set("n", "<leader>lg", "<cmd>LazyGit<cr>", { desc = "LazyGit" })
+vim.keymap.set("n", "<leader>ld", "<cmd>LazyDocker<cr>", { desc = "LazyDocker" })
 vim.keymap.set("n", "<leader>vs", "<cmd>vs<cr>", { desc = "[V]ertical [S]plit" })
 vim.keymap.set("n", "<leader>vn", "<cmd>vnew<cr>", { desc = "[V]ertical [N]ew" })
 vim.keymap.set("n", "K", ":m .-2<CR>==", { desc = "Move current line up" })
@@ -415,6 +416,8 @@ vim.keymap.set("n", "J", ":m .+1<CR>==", { desc = "Move current line down" })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selected lines up" })
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selected lines down" })
 vim.keymap.set("n", "<leader>te", "<cmd>:terminal<cr>", { desc = "[T]erminal [E]mbed" })
+vim.keymap.set("n", "<leader>lr", "<cmd>:LspRestart<cr>", { desc = "[L]SP [R]estart" })
+vim.keymap.set("n", "<leader>lz", "<cmd>:Lazy<cr>", { desc = "[L]a[z]estart" })
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "floaterm",

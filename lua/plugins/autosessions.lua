@@ -1,7 +1,7 @@
 return {
 	{
 		"rmagatti/auto-session",
-		lazy = false,
+		lazy = true,
 
 		---enables autocomplete for opts
 		---@module "auto-session"
@@ -10,6 +10,8 @@ return {
 			--
 			suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
 			auto_create = true,
+			lazy_support = true,
+			lsp_stop_on_restore = true,
 			session_lens = {
 				load_on_setup = true,
 				previewer = false,
