@@ -149,11 +149,11 @@ end, { desc = "Goto previous warning diagnostic" })
 -- Moonlander diagnostic movements --
 
 -- Open the diagnostic under the cursor in a float window
--- nnoremap("<leader>d", function()
--- 	vim.diagnostic.open_float({
--- 		border = "rounded",
--- 	})
--- end, { desc = "Open [d]iagnostic under the curstor" })
+nnoremap("<leader>dd", function()
+	vim.diagnostic.open_float({
+		border = "rounded",
+	})
+end, { desc = "Open [d]iagnostic under the curstor" })
 
 -- Place all dignostics into a qflist
 -- nnoremap("<leader>ld", vim.diagnostic.setqflist, { desc = "Quickfix [L]ist [D]iagnostics" })
@@ -418,6 +418,8 @@ vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selected lines down"
 vim.keymap.set("n", "<leader>te", "<cmd>:terminal<cr>", { desc = "[T]erminal [E]mbed" })
 vim.keymap.set("n", "<leader>lr", "<cmd>:LspRestart<cr>", { desc = "[L]SP [R]estart" })
 vim.keymap.set("n", "<leader>lz", "<cmd>:Lazy<cr>", { desc = "[L]a[z]estart" })
+vim.keymap.set("x", "p", '"_dP', { noremap = true, silent = true })
+vim.keymap.set("x", "<leader>p", '"_dP', { noremap = true, silent = true })
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "floaterm",

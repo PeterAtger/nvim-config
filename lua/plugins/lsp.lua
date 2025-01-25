@@ -10,7 +10,6 @@ return {
 				opts = {
 					ensure_installed = {
 						"eslint-lsp",
-						"js-debug-adapter",
 						"prettier",
 						"typescript-language-server",
 					},
@@ -151,6 +150,9 @@ return {
 					},
 				},
 				intelephense = {
+					format = {
+						enable = true,
+					},
 					autostart = true,
 				},
 			}
@@ -159,6 +161,7 @@ return {
 				prettierd = {},
 				stylua = {},
 				intelephense = {},
+				phpcs = {},
 			}
 
 			local manually_installed_servers = { "ocamllsp", "gleam", "rust_analyzer" }
@@ -234,7 +237,7 @@ return {
 				lsp_format = "never",
 			},
 			formatters_by_ft = {
-				svelte = { "prettierd", "prettier " },
+				svelte = { "prettierd", "prettier" },
 				lua = { "stylua" },
 			},
 		},

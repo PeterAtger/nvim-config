@@ -4,13 +4,7 @@ return {
 		dependencies = {
 			"rcarriga/nvim-dap-ui",
 			"nvim-neotest/nvim-nio",
-			"mxsdev/nvim-dap-vscode-js",
-			-- build debugger from source
-			{
-				"microsoft/vscode-js-debug",
-				version = "1.x",
-				build = "npm i && npm run compile vsDebugServerBundle && mv dist out",
-			},
+			"jay-babu/mason-nvim-dap.nvim",
 		},
 		keys = {
 			{
@@ -21,7 +15,7 @@ return {
 				desc = "Toggle Breakpoint",
 			},
 			{
-				"<leader>dc",
+				"<leader>dn",
 				function()
 					require("dap").continue()
 				end,
@@ -48,90 +42,95 @@ return {
 				end,
 				desc = "Setp out",
 			},
+			{
+				"<leader>dx",
+				function()
+					require("dap").disconnect()
+				end,
+				desc = "Dap Kill",
+			},
+			{
+				"<leader>dt",
+				function()
+					require("dapui").toggle()
+				end,
+				desc = "Dapui Toggle",
+			},
 		},
 		config = function()
 			local dap = require("dap")
-			require("dap-vscode-js").setup({
-				debugger_path = "~/.local/share/nvim/mason/packages/js-debug-adapter",
-				debugger_cmd = { "js-debug-adapter" },
-				adapters = {
-					"pwa-chrome",
-					"pwa-msedge",
-					"node-terminal",
-					"pwa-extensionHost",
+
+			require("mason-nvim-dap").setup({
+				automatic_installation = true,
+				handlers = {},
+				ensure_installed = {
+					"js-debug-adapter",
+					"php-debug-adapter",
 				},
 			})
 
-			dap.adapters["pwa-node"] = {
-				type = "server",
-				host = "localhost",
-				port = "${port}",
-				executable = {
-					command = "node",
-					args = {
-						"/home/peter/.local/share/nvim/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
-						"${port}",
-					},
+			dap.configurations.javascript = {
+				{
+					-- use nvim-dap-vscode-js's pwa-node debug adapter
+					type = "node2",
+					-- launch a new process to attach the debugger to
+					request = "launch",
+					-- name of the debug action you have to select for this config
+					name = "Launch file in new node process",
+					-- launch current file
+					program = "${file}",
+					cwd = "${workspaceFolder}",
 				},
 			}
 
-			for _, language in ipairs({ "typescript", "javascript", "svelte" }) do
-				require("dap").configurations[language] = {
-					-- attach to a node process that has been started with
-					-- `--inspect` for longrunning tasks or `--inspect-brk` for short tasks
-					-- npm script -> `node --inspect-brk ./node_modules/.bin/vite dev`
-					--
-					-- only if language is javascript, offer this debug action
-					language == "javascript"
-							and {
-								-- use nvim-dap-vscode-js's pwa-node debug adapter
-								type = "pwa-node",
-								-- launch a new process to attach the debugger to
-								request = "launch",
-								-- name of the debug action you have to select for this config
-								name = "Launch file in new node process",
-								-- launch current file
-								program = "${file}",
-								cwd = "${workspaceFolder}",
-							}
-						or nil,
-					{
-						-- use nvim-dap-vscode-js's pwa-node debug adapter
-						type = "pwa-node",
-						-- attach to an already running node process with --inspect flag
-						-- default port: 9222
-						request = "attach",
-						port = 9222,
-						-- allows us to pick the process using a picker
-						processId = require("dap.utils").pick_process,
-						-- name of the debug action you have to select for this config
-						name = "Attach debugger to existing `node --inspect` process",
-						-- for compiled languages like TypeScript or Svelte.js
-						sourceMaps = true,
-						-- resolve source maps in nested locations while ignoring node_modules
-						resolveSourceMapLocations = {
-							"${workspaceFolder}/**",
-							"!**/node_modules/**",
+			dap.configurations.typescript = {
+				{
+					type = "node2",
+					request = "launch",
+					name = "Feeds Tool",
+					program = "${workspaceFolder}/node_modules/ts-node/dist/bin.js",
+					cwd = "${workspaceFolder}/apps/generator",
+					runtimeExecutable = "node",
+					args = {
+						"-P",
+						"${workspaceFolder}/apps/generator/tsconfig.json",
+						"${workspaceFolder}/apps/generator/src/debug.ts",
+					},
+					sourceMaps = true,
+				},
+				{
+					name = "Launch File",
+					type = "node2",
+					request = "launch",
+					cwd = "${workspaceFolder}",
+					runtimeExecutable = "node",
+					program = "${env:HOME}/n/lib/node_modules/ts-node/dist/bin.js",
+					args = {
+						"-P",
+						"${workspaceFolder}/tsconfig.json",
+						"${file}",
+					},
+					sourceMaps = false,
+				},
+			}
+
+			dap.configurations.php = {
+				{
+					name = "PHP: Listen for Xdebug",
+					port = 9003,
+					request = "launch",
+					type = "php",
+					breakpoints = {
+						exception = {
+							Notice = false,
+							Warning = false,
+							Error = true,
+							Exception = true,
+							["*"] = false,
 						},
-						-- path to src in vite based projects (and most other projects as well)
-						cwd = "${workspaceFolder}/src",
-						-- we don't want to debug code inside node_modules, so skip it!
-						skipFiles = { "${workspaceFolder}/node_modules/**/*.js" },
 					},
-					{
-						type = "pwa-msedge",
-						name = "Launch edge to debug client",
-						request = "launch",
-						url = "http://localhost:5173",
-						sourceMaps = true,
-						protocol = "inspector",
-						port = 9222,
-						webRoot = "${workspaceFolder}/src",
-						-- skip files from vite's hmr
-						skipFiles = { "**/node_modules/**/*", "**/@vite/*", "**/src/client/*", "**/src/*" },
-					},
-				}
-			end
+				},
+			}
 
 			require("dapui").setup()
 			local dap, dapui = require("dap"), require("dapui")
